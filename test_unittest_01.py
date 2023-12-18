@@ -3,6 +3,8 @@ from selenium.webdriver.common.by import By
 import time
 import unittest
 
+welcome_text2 = 1
+
 try: 
     link = "https://suninjuly.github.io/registration1.html"
     browser = webdriver.Chrome()
@@ -33,6 +35,10 @@ try:
 
     # с помощью assert проверяем, что ожидаемый текст совпадает с текстом на странице сайта
     # assert "Congratulations! You have successfully registered!" == welcome_text1
+
+    class TestAbs(unittest.TestCase):
+        def test_abs1(self):
+            self.assertEqual("Congratulations! You have successfully registered!", welcome_text1, "Should be absolute value of a number")
 
     link = "https://suninjuly.github.io/registration2.html"
     browser = webdriver.Chrome()
@@ -70,11 +76,8 @@ finally:
     # закрываем браузер после всех манипуляций
     browser.quit()
 
-    class TestAbs(unittest.TestCase):
-        def test_abs1(self):
-            self.assertEqual("Congratulations! You have successfully registered!", welcome_text1, "Should be absolute value of a number")
-        
-        def test_abs2(self):
+    class TestAbs2(unittest.TestCase):
+         def test_abs2(self):
             self.assertEqual("Congratulations! You have successfully registered!", welcome_text2, "Should be absolute value of a number")
         
     if __name__ == "__main__":
