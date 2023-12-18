@@ -1,1 +1,0 @@
-kakou-to text opisani9
