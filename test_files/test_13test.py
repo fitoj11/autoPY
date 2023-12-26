@@ -20,7 +20,7 @@ try:
 
     button = WebDriverWait(browser, 12).until(
         EC.text_to_be_present_in_element((By.CSS_SELECTOR, "h5[style='display:inline;float:right']"), text_='100')) # найти элемент, ждем до 12 секунд. Как только значение в элементе (текст) 
-    # будет равен 100 - идем дальше
+    # будет равен 100 - идем дальше22
     
     input1 = browser.find_element(By.CSS_SELECTOR, "button[id='book']")
     input1.click()
