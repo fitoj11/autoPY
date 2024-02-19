@@ -4,6 +4,7 @@ from .locators import LoginPageLocators
 from .locators import MainPageLocators
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoAlertPresentException
 import time
 import math
 
@@ -17,6 +18,14 @@ class ProductPage(BasePage):
     def add_to_card(self):
         add_to_card = self.browser.find_element(*MainPageLocators.add_to_card)
         add_to_card.click()
+    def correct_name(self):
+        correct_name = self.browser.find_element(*MainPageLocators.correct_name).text
+        correct_name_01 = self.browser.find_element(*MainPageLocators.correct_name_01).text
+        assert correct_name == correct_name_01, "name is diff"
+    def correct_value(self):
+        correct_value = self.browser.find_element(*MainPageLocators.correct_value).text
+        correct_value_01 = self.browser.find_element(*MainPageLocators.correct_value_01).text
+        assert correct_value == correct_value_01, "price is diff"
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
