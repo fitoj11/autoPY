@@ -27,35 +27,28 @@
 # abs(min(3, -2, -3.1, 0.2)),
 # min(3, abs(-2), abs(-3.1), 0.2))
 
+def popular(bmi, x, y, a):
+    if bmi < x:
+        description = "недостаточной массой тела."
+    elif bmi < y:
+        description = "нормальной массой тела."
+    elif bmi < a:
+        description = "избыточной массой тела."
+    else:
+        description = "ожирением."
+    text = print("Ваш индекс массы тела:", bmi, "Вы относитесь к группе людей с", description)
+    return text
+
 name = str(input("Whats your name? "))
 age = int(input("Сколько Вам полных лет? "))
 height = float(input("Ваш рост? "))
 weight = float(input("Ваш вес? "))
+bmi = weight / height ** 2
+bmi = round(bmi, 2)
 if age < 10 or height <= 0 or height > 3 or weight <= 0 or weight > 500:
     print("Ошибочные входные данные")
 else:
     if age < 45:
-        bmi = weight / height ** 2
-        bmi = round(bmi, 2)
-        if bmi < 18.5:
-            description = "недостаточной массой тела."
-        elif bmi < 25:
-            description = "нормальной массой тела."
-        elif bmi < 30:
-            description = "избыточной массой тела."
-        else:
-            description = "ожирением."
-        print("Ваш индекс массы тела:", bmi, "Вы относитесь к группе людей с", description)
+        popular(bmi, 18.5, 25, 30)
     else:
-        bmi = weight / height ** 2
-        bmi = round(bmi, 2)
-        if bmi < 22:
-            description = "недостаточной массой тела."
-        elif bmi < 27:
-            description = "нормальной массой тела."
-        elif bmi < 32:
-            description = "избыточной массой тела."
-        else:
-            description = "ожирением."
-        print("Ваш индекс массы тела:", bmi, "Вы относитесь к группе людей с", description)
-print(bmi)
+        popular(bmi, 22, 27, 32)
