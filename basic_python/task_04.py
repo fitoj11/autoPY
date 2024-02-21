@@ -33,6 +33,5 @@ def vklad():
         s = x*((1+(k/(12*100)))**n)
         vklad_prib = s - x
         if round(vklad_prib, 1) == 1859.0:
-            otvet = vklad_prib
             return x
 print(round(vklad()))
