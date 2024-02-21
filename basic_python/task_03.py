@@ -38,18 +38,26 @@ import math
 #         print(k, 'рублей')
 #     else:
 #         print(k, 'рубля')
-import math
-a=float(input())
-b=float(input())
-v=int(input())
-if a > 0 and b > 0 and v > 0:
-    quantity=((5*a**2)*(b/1000))/v
-    if quantity <= 0 or a <= 0 or b <= 0 or v <= 0:
-        print('error')
-    else:
-        print(math.ceil(quantity))
+# import math
+# a=float(input())
+# b=float(input())
+# v=int(input())
+# if a > 0 and b > 0 and v > 0:
+#     quantity=((5*a**2)*(b/1000))/v
+#     if quantity <= 0 or a <= 0 or b <= 0 or v <= 0:
+#         print('error')
+#     else:
+#         print(math.ceil(quantity))
+# else:
+#     print('error')
+
+h=int(input())
+m=int(input())
+s=int(input())
+if h >= 0 and h < 12 and m >= 0 and m < 60 and s >= 0 and s < 60:
+    angle = h * 30 + m * 0.5 + s / 120
+    print(round(angle, 2))
 else:
     print('error')
 
-# 4 60 0
 
