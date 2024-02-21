@@ -17,14 +17,25 @@ from math import log, sqrt, sin, pi, cos, tan, asin, acos, degrees
 # s=((a**2*sqrt(3))/4)+(((3*a)/2)*sqrt(h**2+(a**2/12)))
 # print(round(v, 3), round(s, 3))
 
-year=int(input())
-if year < 0:
-    print('error')
+# year=int(input())
+# if year < 0:
+#     print('error')
+# else:
+#     if year % 4 == 0:
+#         if year % 100 == 0 and year % 400 != 0:
+#             print(365)
+#         else:
+#             print(366)
+#     else:
+#         print(365)
+
+k=int(input())
+if k < 0 or k > 99:
+    print('ошибка')
 else:
-    if year % 4 == 0:
-        if year % 100 == 0 and year % 400 != 0:
-            print(365)
-        else:
-            print(366)
+    if k % 2 != 0:
+        print(k, 'рублей')
     else:
-        print(365)
+        print(k, 'рубля')
+
+
