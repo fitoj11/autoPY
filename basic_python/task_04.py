@@ -74,9 +74,9 @@ def n_t(t_main):
     except:
         y = math.inf
     return y
-s = input()
-str_list = s.split()
-x_list = [int(t_main) for t_main in str_list]
-for t_main in x_list:
-    y = n_t(t_main)
-    print("%5d - %6.3f миллиард(ов)" % (t_main,  y))
+# s = input()
+# str_list = s.split()
+# x_list = [int(t_main) for t_main in str_list]
+# for t_main in x_list:
+#     y = n_t(t_main)
+#     print("%5d - %6.3f миллиард(ов)" % (t_main,  y))
