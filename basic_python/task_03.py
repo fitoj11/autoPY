@@ -1,4 +1,5 @@
 from math import log, sqrt, sin, pi, cos, tan, asin, acos, degrees
+import math
 # v=float(input())
 # if v <= 0:
 #     print('error')
@@ -29,13 +30,26 @@ from math import log, sqrt, sin, pi, cos, tan, asin, acos, degrees
 #     else:
 #         print(365)
 
-k=int(input())
-if k < 0 or k > 99:
-    print('ошибка')
-else:
-    if k % 2 != 0:
-        print(k, 'рублей')
+# k=int(input())
+# if k < 0 or k > 99:
+#     print('ошибка')
+# else:
+#     if k % 2 != 0:
+#         print(k, 'рублей')
+#     else:
+#         print(k, 'рубля')
+import math
+a=float(input())
+b=float(input())
+v=int(input())
+if a > 0 and b > 0 and v > 0:
+    quantity=((5*a**2)*(b/1000))/v
+    if quantity <= 0 or a <= 0 or b <= 0 or v <= 0:
+        print('error')
     else:
-        print(k, 'рубля')
+        print(math.ceil(quantity))
+else:
+    print('error')
 
+# 4 60 0
 
