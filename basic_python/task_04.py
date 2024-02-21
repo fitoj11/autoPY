@@ -41,32 +41,42 @@ import math
 # y_list = [x + 2 for x in x_list] # испльзование списка x_list, преобразование его элементам от X, выражение X+2
 # print(list(y_list))
 
+# import math
+# def f_x(x):
+#    try:
+#        y = 1 / (x+1) + x / (x-3)
+#    except:
+#        y = math.inf
+#    return y
+# a = float(input("a = "))
+# b = float(input("b = "))
+# n = int(input("n = "))
+# if n < 0 or a >= b:
+#     print("Ошибочные входные данные")
+# else:
+#     h = (b - a) / (n - 1)
+#     x_list = [a + i * h for i in range(n)]
+#     f_list = [f_x(x) for x in x_list]
+#     print("-" * 17)
+#     print(f'| {"x":^6s} | {"f(x)": ^5s} |')
+#     print("-" * 17)
+#     for i in range(n):
+#         print(f'| {x_list[i]:6.3f} | {f_list[i]:5.3f} |')
+#     print("-" * 17)
+from math import log, sqrt, sin, pi, cos, tan, asin, acos, degrees, atan
 import math
-def f_x(x):
-   try:
-       y = 1 / (x+1) + x / (x-3)
-   except:
-       y = math.inf
-   return y
-a = float(input("a = "))
-b = float(input("b = "))
-n = int(input("n = "))
-if n < 0 or a >= b:
-    print("Ошибочные входные данные")
-else:
-    h = (b - a) / (n - 1)
-    x_list = [a + i * h for i in range(n)]
-    f_list = [f_x(x) for x in x_list]
-    print("-" * 17)
-    print(f'| {"x":^6s} | {"f(x)": ^5s} |')
-    print("-" * 17)
-    for i in range(n):
-        print(f'| {x_list[i]:6.3f} | {f_list[i]:5.3f} |')
-    print("-" * 17)
-
-        # s = input(("x_list = "))
-# str_list = s.split()
-# x_list = [float(x) for x in str_list]
-# for x in x_list:
-#     y = f_x(x)
-#     print("f(%4.2f) = %6.3f" % (x,  y))
+def n_t(t_main):
+    try:
+        c = 172
+        t = 45
+        t1 = 2000
+        y = (c/t)*((pi/2)-atan((t1-t_main)/t))
+    except:
+        y = math.inf
+    return y
+s = input()
+str_list = s.split()
+x_list = [int(t_main) for t_main in str_list]
+for t_main in x_list:
+    y = n_t(t_main)
+    print("%5d - %6.3f миллиард(ов)" % (t_main,  y))
