@@ -52,13 +52,13 @@ import matplotlib.pyplot as plt
 # plt.show()
 
 def f_x(x):
-    y = ((exp(cos((x))))+(log(((pow(sin(0.8*(x)),2))+1))*(cos((x)))))
+    y = exp(cos(x)) + log(pow(sin(0.8*x), 2) + 1) * cos(x)
     return y
 def y_x(x):
     y = -log((pow(cos((x))+sin((x)), 2))+1.7)+2
     return y
-a = -2
-b = 6
+a = -240
+b = 360
 n = 100
 h = (b-a)/(n-1)
 x_list = [a + h * i for i in range(n)]
