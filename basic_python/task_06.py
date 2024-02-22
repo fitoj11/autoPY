@@ -16,7 +16,7 @@ def step_2(s, n, k):
             print("%2d месяц - %8.2f руб" % (t_list[i], lambda_list[i]))
             bank_profit = bank_profit + lambda_list[i-1]
         print("Доход банка - %6.2f руб" % (bank_profit-s))
-step_2(300000, 6, 20)
+step_2(int(input()), int(input()), int(input()))
 # f = open("имя файла", "режим открытия", "кодировка" )
 
 
