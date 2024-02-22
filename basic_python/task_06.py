@@ -64,26 +64,51 @@ def step_2(s, n, k):
 # print("sum = ", sum_number)
 # f.close()
 
-f = open("lambda_exp.txt", "r")
-t_list =[]
-lambda_exp_list = []
-for line in f:
-    t_lambda_list = line.split()
-    t_list.append(float(t_lambda_list [0]))
-    lambda_exp_list.append(float(t_lambda_list [1]))
-f.close()
-# t_list = t_list[1:13]
-lambda_list =[compute_lambda(t) for t in t_list]
-error_list = [abs((lambda_exp_list[i] - lambda_list[i]) / lambda_exp_list[i] )
+from math import log, sqrt, sin, pi, cos, tan, asin, acos, degrees, atan
+import math
+def n_t(t_main):
+    try:
+        c = 172
+        t = 45
+        t1 = 2000
+        y = (c/t)*((pi/2)-atan((t1-t_main)/t))
+    except:
+        y = math.inf
+    return y
+s = [1000, 1750, 1800, 1850, 1900, 1950, 1955,
+         1960, 1965, 1970, 1975, 1980, 1985, 1990, 1995,
+         2000, 2005, 2010, 2011, 2012, 2013, 2014, 2015,
+         2016, 2017, 2018, 2019]
+t_list = s
+x_list = [int(t_main) for t_main in t_list]
+for t_main in x_list:
+    y = n_t(t_main)
+    print("%5d - %6.3f миллиард(ов)" % (t_main,  y))
+population =[0.400, 0.791, 1.000, 1.262, 1.650, 2.519,
+             2.756, 3.021, 3.335, 3.692, 4.068, 4.435, 4.831,
+             5.264, 5.674, 6.071, 6.344, 6.933, 7.015, 7.100,
+             7.162, 7.271, 7.358, 7.444, 7.530, 7.669, 7.763]
+# f = open("lambda_exp.txt", "r")
+# t_list =[]
+# lambda_exp_list = []
+# for line in f:
+#     t_lambda_list = line.split()
+#     t_list.append(float(t_lambda_list [0]))
+#     lambda_exp_list.append(float(t_lambda_list [1]))
+# f.close()
+# # t_list = t_list[1:13]
+# lambda_list =[compute_lambda(t) for t in t_list]
+error_list = [abs((s[i] - population[i]) / s[i])
               for i in range(len(t_list))]
 print("-" * 40)
 print("|%7s | %7s | %7s |%8s |" % ("t","l(t)","exp(t)", "error"))
 print( "-" * 40)
 for i in range(len(t_list)):
+    y = n_t(i)
     print("|%7d | %7.3f | %7.1f |%7.2f%% |"
-          % (t_list[i], lambda_list[i], lambda_exp_list[i], error_list[i] * 100))
+          % (t_list[i], population[i], s[i], error_list[i] * 100))
 print("-" * 40)
-max_error = max(error_list[1:13])
+max_error = max(error_list)
 index_max_error = error_list.index(max_error)
 print("Максимальная погрешность = %5.2f%%  при t = %5d"
       % (max_error * 100, t_list[index_max_error]))
@@ -91,5 +116,19 @@ min_error = min(error_list)
 index_min_error = error_list.index(min_error)
 print("Минимальная погрешность = %5.2f%%  при t = %5d"
       % (min_error * 100, t_list[index_min_error]))
-avg_error = sum(error_list[1:13]) / len(t_list[1:13])
+avg_error = sum(error_list) / len(t_list)
 print("Средняя погрешность = %5.2f%%" % (avg_error * 100))
+#
+# import matplotlib.pyplot as plt
+# line_th = plt.plot(t_list, lambda_list, label = 'теоретические')
+# line_exp = plt.plot(t_list, s, label = 'экспериментальные')
+# # задаем стили для линий
+# plt.setp(line_exp, color= "blue", linestyle = "--", linewidth = 2 )
+# plt.setp(line_th, color= "red", linewidth = 2)
+# plt.legend()
+# plt.gca().spines["left"].set_position("zero")
+# plt.gca().spines["bottom"].set_position("zero")
+# plt.gca().spines["top"].set_visible(False)
+# plt.gca().spines["right"].set_visible(False)
+# plt.title("Значения теплопроводности")
+# plt.show()
