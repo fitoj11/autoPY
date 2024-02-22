@@ -38,10 +38,9 @@ import matplotlib.pyplot as plt
 
 import matplotlib.pyplot as plt
 from task_04 import n_t
-f_list = [n_t(t_main) for t_main in range(1500, 1506)]
-x_list = [1500, 1501, 1502, 1503, 1504, 1505]
-# line = plt.plot(t_main, y)
-
+years = [x for x in range(1500, 2000)]
+f_list = [n_t(t_main) for t_main in years]
+x_list = years
 line = plt.plot(x_list, f_list)
 plt.setp(line, color="blue", linewidth=2)
 plt.gca().spines["left"].set_position("center")
