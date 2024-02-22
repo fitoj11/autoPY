@@ -153,25 +153,40 @@ import matplotlib.pyplot as plt
 
 import matplotlib.pyplot as plt
 from matplotlib.patches import Arc, Ellipse, Rectangle, Wedge
-n = 20
-m = 20
-fig, ax = plt.subplots()
-# Создание и добавление каждой фигуры на график
-# arc = Arc((6, 6), 5, 3, angle=0, theta1=200, theta2=100)
-# ellipse = Ellipse((5, 1), 2, 3)
-# rectangle = Rectangle((10, 12), 5, 8)
-# wedge = Wedge((4, 4), 2, -90, 90)
+# n = 20
+# m = 20
+# fig, ax = plt.subplots()
+# # Создание и добавление каждой фигуры на график
+# # arc = Arc((6, 6), 5, 3, angle=0, theta1=200, theta2=100)
+# # ellipse = Ellipse((5, 1), 2, 3)
+# # rectangle = Rectangle((10, 12), 5, 8)
+# # wedge = Wedge((4, 4), 2, -90, 90)
+#
+# figure = Ellipse(5, 1, 2, 3)
+# # figure = Arc((6, 6), 5, 3, 0, 200, 100)
+# # figure = Ellipse((5, 1), 2, 3)
+# # figure = Circle((6, 7), 5, 1)
+# # figure = Rectangle((10, 12), 5, 8)
+# # ax.add_patch(arc)
+# # ax.add_patch(ellipse)
+# # ax.add_patch(rectangle)
+# ax.add_patch(figure)
+# plt.xlim(0, n)
+# plt.ylim(0, m)
+# ax = plt.gca()
+# plt.show()
 
-figure = Ellipse(5, 1, 2, 3)
-# figure = Arc((6, 6), 5, 3, 0, 200, 100)
-# figure = Ellipse((5, 1), 2, 3)
-# figure = Circle((6, 7), 5, 1)
-# figure = Rectangle((10, 12), 5, 8)
-# ax.add_patch(arc)
-# ax.add_patch(ellipse)
-# ax.add_patch(rectangle)
-ax.add_patch(figure)
-plt.xlim(0, n)
-plt.ylim(0, m)
-ax = plt.gca()
+from matplotlib.patches import Wedge, Arc
+#вставить необходимые операторы
+# нарисовать сектор (среди возможных вариантов указать  НАИМЕНЬШИЕ ПОЛОЖИТЕЛЬНЫЕ углы)
+figure_w = # сформировать сектор, параметры для цвета линии и заливки, а также толщины линии не указывать
+ax.add_patch(figure_w)
+# нарисовать дугу (среди возможных вариантов указать НАИМЕНЬШИЕ ПОЛОЖИТЕЛЬНЫЕ углы
+#с НУЛЕВЫМ углом поворота)
+# дуга должна иметь определенную толщину (linewidth=3), цвет не указывать
+figure_a = # сформировать дугу
+ax.add_patch(figure_a)
 plt.show()
+
+Wedge((3, 1), 2, 45, 135)
+Arc((3, 1), 6, 6, 0, 45, 135, lw=3)
