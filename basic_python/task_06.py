@@ -83,7 +83,10 @@ t_list = s
 x_list = [int(t_main) for t_main in t_list]
 for t_main in x_list:
     y = n_t(t_main)
-    print("%5d - %6.3f миллиард(ов)" % (t_main,  y))
+    # print("%6.3f" % (y))
+    y_list = [n_t(t_main) for t_main in x_list] # массив с расчетами по формуле
+# y_list = [int(t_main) for t_main in t_list]
+# print(y_list)
 population =[0.400, 0.791, 1.000, 1.262, 1.650, 2.519,
              2.756, 3.021, 3.335, 3.692, 4.068, 4.435, 4.831,
              5.264, 5.674, 6.071, 6.344, 6.933, 7.015, 7.100,
@@ -98,26 +101,32 @@ population =[0.400, 0.791, 1.000, 1.262, 1.650, 2.519,
 # f.close()
 # # t_list = t_list[1:13]
 # lambda_list =[compute_lambda(t) for t in t_list]
-error_list = [abs((s[i] - population[i]) / s[i])
+error_list = [abs((population[i] - y_list[i]) / population[i])
               for i in range(len(t_list))]
-print("-" * 40)
-print("|%7s | %7s | %7s |%8s |" % ("t","l(t)","exp(t)", "error"))
-print( "-" * 40)
+# print("-" * 40)
+# print("|%7s | %7s | %7s |%8s |" % ("t","l(t)","exp(t)", "error"))
+# print( "-" * 40)
 for i in range(len(t_list)):
     y = n_t(i)
-    print("|%7d | %7.3f | %7.1f |%7.2f%% |"
-          % (t_list[i], population[i], s[i], error_list[i] * 100))
-print("-" * 40)
-max_error = max(error_list)
+#     print("|%7d | %7.3f | %7.3f |%7.2f%% |"
+#           % (t_list[i], y_list[i], population[i], error_list[i] * 100))
+# print("-" * 40)
+
+first = int(input())
+second = int(input()) + 1
+
+max_error = max(error_list[first:second])
 index_max_error = error_list.index(max_error)
-print("Максимальная погрешность = %5.2f%%  при t = %5d"
-      % (max_error * 100, t_list[index_max_error]))
-min_error = min(error_list)
+# print("Максимальная погрешность = %5.2f%%  при t = %5d"
+#       % (max_error * 100, t_list[index_max_error]))
+min_error = min(error_list[first:second])
 index_min_error = error_list.index(min_error)
-print("Минимальная погрешность = %5.2f%%  при t = %5d"
-      % (min_error * 100, t_list[index_min_error]))
-avg_error = sum(error_list) / len(t_list)
-print("Средняя погрешность = %5.2f%%" % (avg_error * 100))
+# print("Минимальная погрешность = %5.2f%%  при t = %5d"
+#       % (min_error * 100, t_list[index_min_error]))
+avg_error = sum(error_list[first:second]) / len(t_list[first:second])
+# print("Средняя погрешность = %5.2f%%" % (avg_error * 100))
+print("Погрешность - минимальная, год: %4d, максимальная, год: %4d, средняя, процент: %6.3f"
+      % (t_list[index_min_error], t_list[index_max_error], avg_error * 100))
 #
 # import matplotlib.pyplot as plt
 # line_th = plt.plot(t_list, lambda_list, label = 'теоретические')
