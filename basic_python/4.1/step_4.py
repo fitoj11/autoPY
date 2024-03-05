@@ -10,8 +10,6 @@ c = np.array(array_list, dtype=float)
 # print(c)
 a = c[0]
 h = c[1]
-v_max = 0
-s_min = 0
 list_v = []
 list_s = []
 i = 0
