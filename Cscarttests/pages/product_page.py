@@ -41,8 +41,10 @@ class ProductPage(BasePage):
     def should_be_have_addTOcart_button(self):
         assert self.is_element_present(*CsCartLocators.Add_to_cart_button), "Not have add to cart button"
     def add_to_cart(self):
+        global price
         link = self.browser.find_element(*CsCartLocators.Add_to_cart_button)
         self.browser.execute_script("return arguments[0].scrollIntoView(true);", link)
+        price = self.browser.find_element(*CsCartLocators.price_product).text
         link.click()
     def should_be_have_notification(self):
         assert self.browser.find_element(*CsCartLocators.ADD_NOTIFICATION), "Not have notification after add to cart"
@@ -65,6 +67,4 @@ class ProductPage(BasePage):
         assert self.is_element_present(*CsCartLocators.cart_name), "Not in cart"
     def should_be_quantity_equal(self):
         abs = float(self.browser.find_element(*CsCartLocators.quantity_cart).text) / float(self.browser.find_element(*CsCartLocators.quantity_cart2).text)
-        print('abs = ' + abs)
-        print('quantity = ' + quantity)
-        assert abs == quantity, "Not same quantity"
+        assert int(abs) == int(quantity) and self.browser.find_element(*CsCartLocators.quantity_cart2).text == price, "Not same quantity"
