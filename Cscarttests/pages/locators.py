@@ -28,3 +28,4 @@ class CsCartLocators():
     quantity_cart = (By.CSS_SELECTOR, "td>span[class='price']:first-child")
     quantity_cart2 = (By.CSS_SELECTOR, "td>span[class='ty-sub-price']:first-child")
     price_cart = (By.CSS_SELECTOR, "p>span[id]")
+    CHECKOUT_LINK = (By.CSS_SELECTOR, "div[class='ty-float-right ty-cart-content__right-buttons']>a[class='ty-btn ty-btn__primary ']")

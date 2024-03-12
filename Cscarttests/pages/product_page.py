@@ -68,3 +68,16 @@ class ProductPage(BasePage):
     def should_be_quantity_equal(self):
         abs = float(self.browser.find_element(*CsCartLocators.quantity_cart).text) / float(self.browser.find_element(*CsCartLocators.quantity_cart2).text)
         assert int(abs) == int(quantity) and self.browser.find_element(*CsCartLocators.quantity_cart2).text == price, "Not same quantity"
+    def click_product_from_main_page(self):
+        link = self.browser.find_element(*CsCartLocators.PRODUCT_LINK)
+        link.click()
+    def go_to_checkout(self):
+        link = self.browser.find_element(*CsCartLocators.CHECKOUT_LINK)
+        link.click()
+class BeforeMethod(BasePage):
+    def main_product_add_in_cart_checkout(self):
+        BasePage.open(self)
+        ProductPage.click_product_from_main_page(self)
+        ProductPage.add_to_cart(self)
+        ProductPage.go_to_cart(self)
+        ProductPage.go_to_checkout(self)

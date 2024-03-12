@@ -1,6 +1,7 @@
 from .pages.base_page import BasePage
 from .pages.main_page import MainPage
 from .pages.product_page import ProductPage
+from .pages.product_page import BeforeMethod
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import WebDriverWait
@@ -33,3 +34,7 @@ def test_product_in_cart(browser): # с главной, в карточку то
     page.should_be_in_cart()
     # time.sleep(10)
     page.should_be_quantity_equal()
+def test_in_cart(browser): # в корзине тот товар, что мы добавили в корзину
+    page = BeforeMethod(browser, link)
+    page.main_product_add_in_cart_checkout()
+    time.sleep(2)
