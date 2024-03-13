@@ -34,7 +34,9 @@ def test_product_in_cart(browser): # с главной, в карточку то
     page.should_be_in_cart()
     # time.sleep(10)
     page.should_be_quantity_equal()
-def test_in_cart(browser): # в корзине тот товар, что мы добавили в корзину
+def test_in_cart(browser): # в корзине тот товар, что мы добавили в корзину, тест что в чекауте столько же товара и по той же цене
     page = BeforeMethod(browser, link)
     page.main_product_add_in_cart_checkout()
+    page = ProductPage(browser, link)
+    page.should_be_quantity_equal_checkout()
     time.sleep(2)
