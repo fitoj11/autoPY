@@ -66,14 +66,31 @@ class ProductPage(BasePage):
     def should_be_in_cart(self):
         assert self.is_element_present(*CsCartLocators.cart_name), "Not in cart"
     def should_be_quantity_equal(self):
-        abs = float(self.browser.find_element(*CsCartLocators.quantity_cart).text) / float(self.browser.find_element(*CsCartLocators.quantity_cart2).text)
-        assert int(abs) == int(quantity) and self.browser.find_element(*CsCartLocators.quantity_cart2).text == price, "Not same quantity"
+        abs = (float(self.browser.find_element(*CsCartLocators.quantity_cart).text)
+               / float(self.browser.find_element(*CsCartLocators.quantity_cart2).text))
+        assert (int(abs) == int(quantity)
+                and self.browser.find_element(*CsCartLocators.quantity_cart2).text == price), "Not same quantity"
     def click_product_from_main_page(self):
         link = self.browser.find_element(*CsCartLocators.PRODUCT_LINK)
         link.click()
     def go_to_checkout(self):
         link = self.browser.find_element(*CsCartLocators.CHECKOUT_LINK)
         link.click()
+    def should_be_quantity_equal_checkout(self):
+        assert (int(quantity) == int(self.browser.find_element(*CsCartLocators.checkout_quantity).text)
+                and self.browser.find_element(*CsCartLocators.checkout_price).text == price), "Not same quantity"
+    def pass_required(self):
+        link = self.browser.find_elements(*CsCartLocators.required_inputs)
+        for x in range(len(link)):
+            link[x].send_keys('test@test.test')
+    def change_shipping(self):
+        try:
+            link = self.browser.find_element(*CsCartLocators.shipping)
+            if link == True:
+                link = self.browser.find_element(*CsCartLocators.shipping_block)
+                link.click() # добавить клик на "пустое поле" для выбора адреса
+        except:
+            return True
 class BeforeMethod(BasePage):
     def main_product_add_in_cart_checkout(self):
         BasePage.open(self)
@@ -81,3 +98,12 @@ class BeforeMethod(BasePage):
         ProductPage.add_to_cart(self)
         ProductPage.go_to_cart(self)
         ProductPage.go_to_checkout(self)
+    def main_add_checout_success_order(self):
+        BasePage.open(self)
+        ProductPage.click_product_from_main_page(self)
+        ProductPage.add_to_cart(self)
+        ProductPage.go_to_cart(self)
+        ProductPage.go_to_checkout(self)
+        ProductPage.change_shipping(self)
+        ProductPage.pass_required(self)
+

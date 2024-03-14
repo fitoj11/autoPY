@@ -30,3 +30,11 @@ class CsCartLocators():
     price_cart = (By.CSS_SELECTOR, "p>span[id]")
     CHECKOUT_LINK = (By.CSS_SELECTOR, "div[class='ty-float-right ty-cart-content__right-buttons']>a[class='ty-btn ty-btn__primary ']")
     checkout_price = (By.CSS_SELECTOR, "div[class='ty-order-products__price']>span:nth-child(3)")
+    checkout_quantity = (By.CSS_SELECTOR, "div[class='ty-order-products__price']>span:nth-child(1)")
+    required_inputs = (By.CSS_SELECTOR, "div[class*='field--input']:has(>label[class*='required']) input")
+    shipping = (By.CSS_SELECTOR, "[class*='pickup--map-list']")
+    shipping_block = (By.CSS_SELECTOR, "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:first-child")
+    "div>label[class*='required']"
+    "div[class*='field--input']>label[class*='required']"
+    "div[class*='field--input']:has(>label[class*='required'])" # оператор :has() выбирает родительский элемент по характеристикам дочернего.
+    "div[class*='field--input']:has(>label[class*='required']) input" # находим родителя, потом смещаемся на дочерний элемент "input"
