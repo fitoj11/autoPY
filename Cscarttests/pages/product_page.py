@@ -1,4 +1,5 @@
 from .base_page import BasePage
+# from .main_page import *
 from selenium.webdriver.common.by import By
 from .locators import LoginPageLocators
 from .locators import MainPageLocators
@@ -52,7 +53,7 @@ class ProductPage(BasePage):
         global quantity
         link = self.browser.find_element(*CsCartLocators.cart_button)
         close = self.is_element_present(*CsCartLocators.close)
-        if close == True:
+        if close != None:
             close = self.browser.find_element(*CsCartLocators.close)
             quantity = self.browser.find_element(*CsCartLocators.quantity).text
             close.click()
@@ -83,14 +84,18 @@ class ProductPage(BasePage):
         link = self.browser.find_elements(*CsCartLocators.required_inputs)
         for x in range(len(link)):
             link[x].send_keys('test@test.test')
+
     def change_shipping(self):
         try:
-            link = self.browser.find_element(*CsCartLocators.shipping)
-            if link == True:
-                link = self.browser.find_element(*CsCartLocators.shipping_block)
-                link.click() # добавить клик на "пустое поле" для выбора адреса
+            link = self.browser.find_element(*CsCartLocators.shipping_block_click)
+            if link != None:
+                self.browser.execute_script("return arguments[0].scrollIntoView(true);", link)
+                link.click()
         except:
             return True
+        if self.is_not_element_present(self.browser, *CsCartLocators.loader) == True:
+            link2 = self.browser.find_element(*CsCartLocators.shipping_block)
+            link2.click()
 class BeforeMethod(BasePage):
     def main_product_add_in_cart_checkout(self):
         BasePage.open(self)
@@ -104,6 +109,6 @@ class BeforeMethod(BasePage):
         ProductPage.add_to_cart(self)
         ProductPage.go_to_cart(self)
         ProductPage.go_to_checkout(self)
-        ProductPage.change_shipping(self)
         ProductPage.pass_required(self)
+        ProductPage.change_shipping(self)
 

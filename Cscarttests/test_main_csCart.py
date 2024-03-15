@@ -43,4 +43,4 @@ def test_in_cart(browser): # в корзине тот товар, что мы д
 def test_main_add_checout_success_order(browser):
     page = BeforeMethod(browser, link)
     page.main_add_checout_success_order()
-    time.sleep(2)
+    time.sleep(522)

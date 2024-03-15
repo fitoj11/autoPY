@@ -33,7 +33,10 @@ class CsCartLocators():
     checkout_quantity = (By.CSS_SELECTOR, "div[class='ty-order-products__price']>span:nth-child(1)")
     required_inputs = (By.CSS_SELECTOR, "div[class*='field--input']:has(>label[class*='required']) input")
     shipping = (By.CSS_SELECTOR, "[class*='pickup--map-list']")
-    shipping_block = (By.CSS_SELECTOR, "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:first-child")
+    shipping_block = (By.CSS_SELECTOR, "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:nth-child(2)")
+    shipping_block_click = (By.CSS_SELECTOR , "[class='litecheckout__group litecheckout__step']")
+    # loader = (By.CSS_SELECTOR , "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:nth-child(2)")
+    loader = (By.CSS_SELECTOR, "div[id='ajax_overlay'][style='display: block;']")
     "div>label[class*='required']"
     "div[class*='field--input']>label[class*='required']"
     "div[class*='field--input']:has(>label[class*='required'])" # оператор :has() выбирает родительский элемент по характеристикам дочернего.
