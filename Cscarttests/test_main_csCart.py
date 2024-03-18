@@ -40,7 +40,11 @@ def test_in_cart(browser): # в корзине тот товар, что мы д
     page = ProductPage(browser, link)
     page.should_be_quantity_equal_checkout()
     # time.sleep(2)
-def test_main_add_checout_success_order(browser):
+def test_main_add_checout_success_order(browser): # с главной перейти в товар, в чекаут, оформить заказ
     page = BeforeMethod(browser, link)
     page.main_add_checout_success_order()
     time.sleep(522)
+def test_test(browser):
+    page = BeforeMethod(browser, link)
+    page.kill_recaptcha()
+    time.sleep(5)

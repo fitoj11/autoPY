@@ -34,9 +34,14 @@ class CsCartLocators():
     required_inputs = (By.CSS_SELECTOR, "div[class*='field--input']:has(>label[class*='required']) input")
     shipping = (By.CSS_SELECTOR, "[class*='pickup--map-list']")
     shipping_block = (By.CSS_SELECTOR, "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:nth-child(2)")
-    shipping_block_click = (By.CSS_SELECTOR , "[class='litecheckout__group litecheckout__step']")
+    shipping_block_click = (By.CSS_SELECTOR, "[class='litecheckout__group litecheckout__step']")
     # loader = (By.CSS_SELECTOR , "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:nth-child(2)")
     loader = (By.CSS_SELECTOR, "div[id='ajax_overlay'][style='display: block;']")
+    payment_link = (By.CSS_SELECTOR, "[data-ca-toggling='payments_form_wrapper_18']")
+    required_terms = (By.CSS_SELECTOR, "[id*='id_accept_terms']")
+    place_order_button = (By.CSS_SELECTOR, "[name='dispatch[checkout.place_order]']")
+    admin_entry = (By.CSS_SELECTOR, "[name='dispatch[auth.login]']")
+    "https://dev.demo.cs-cart.ru/admin.php"
     "div>label[class*='required']"
     "div[class*='field--input']>label[class*='required']"
     "div[class*='field--input']:has(>label[class*='required'])" # оператор :has() выбирает родительский элемент по характеристикам дочернего.

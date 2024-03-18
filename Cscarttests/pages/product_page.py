@@ -96,19 +96,53 @@ class ProductPage(BasePage):
         if self.is_not_element_present(self.browser, *CsCartLocators.loader) == True:
             link2 = self.browser.find_element(*CsCartLocators.shipping_block)
             link2.click()
+    def loader_wait(self):
+        try:
+            self.is_not_element_present(self.browser, *CsCartLocators.loader)
+        finally:
+            return True
+    def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"
+        link = self.browser.window_handles
+        self.browser.switch_to.window(link[tab_number])
+    def move_to_elemnt(self, element):
+        self.browser.execute_script("return arguments[0].scrollIntoView(true);", element)
+    def change_payment(self):
+        ProductPage.loader_wait(self)
+        link = self.browser.find_element(*CsCartLocators.payment_link)
+        link.click()
+    def click_required_terms(self):
+        ProductPage.loader_wait(self)
+        link = self.browser.find_element(*CsCartLocators.required_terms)
+        ProductPage.move_to_elemnt(self, link)
+        link.click()
+    def click_place_order_button(self):
+        link = self.browser.find_element(*CsCartLocators.place_order_button)
+        ProductPage.move_to_elemnt(self, link)
+        link.click()
+    def enter_admin(self):
+        ProductPage.tabs(self, 1)
+        # self.is_element_here(self.browser, *CsCartLocators.admin_entry)
+        link = self.browser.find_element(*CsCartLocators.admin_entry)
+        link.click()
 class BeforeMethod(BasePage):
-    def main_product_add_in_cart_checkout(self):
+    def main_product_add_in_cart_checkout(self): # с главной, в товар, в карточку, в корзину, в чекаут
         BasePage.open(self)
         ProductPage.click_product_from_main_page(self)
         ProductPage.add_to_cart(self)
         ProductPage.go_to_cart(self)
         ProductPage.go_to_checkout(self)
-    def main_add_checout_success_order(self):
-        BasePage.open(self)
-        ProductPage.click_product_from_main_page(self)
-        ProductPage.add_to_cart(self)
-        ProductPage.go_to_cart(self)
-        ProductPage.go_to_checkout(self)
+    def pass_required_checkout_for_order(self): # ввести в чекауте все обязательные поля, изменить шиппинг, изменить способ доставки (по тел)
         ProductPage.pass_required(self)
         ProductPage.change_shipping(self)
+        ProductPage.change_payment(self)
+        ProductPage.click_required_terms(self)
+        ProductPage.click_place_order_button(self)
+    def kill_recaptcha(self):
+        BasePage.open_second_tab(self)
+        ProductPage.enter_admin(self)
 
+
+
+    def main_add_checout_success_order(self): # главная - товар - добавить в корзину - чекаут - заполнить все поля - нажать плейс ордер
+        BeforeMethod.main_product_add_in_cart_checkout(self)
+        BeforeMethod.pass_required_checkout_for_order(self)

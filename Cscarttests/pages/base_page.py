@@ -10,6 +10,8 @@ class BasePage():
         self.browser.implicitly_wait(timeout)
     def open(self):
         self.browser.get(self.url)
+    def open_second_tab(self):
+        self.browser.execute_script("window.open('https://dev.demo.cs-cart.ru/admin.php')")
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
@@ -21,5 +23,10 @@ class BasePage():
             WebDriverWait(driver, timeout).until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:
             return True
-
         return False
+    def is_element_here(self, driver, how, what, timeout=2): # ждем пока элемент появится (не протестировано)
+        try:
+            WebDriverWait(driver, timeout).until(EC.presence_of_element_located((how, what)))
+        except TimeoutException:
+            return False
+        return True
