@@ -1,3 +1,5 @@
+from selenium.webdriver import ActionChains
+
 from .base_page import BasePage
 # from .main_page import *
 from selenium.webdriver.common.by import By
@@ -101,11 +103,14 @@ class ProductPage(BasePage):
             self.is_not_element_present(self.browser, *CsCartLocators.loader)
         finally:
             return True
-    def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"
-        link = self.browser.window_handles
-        self.browser.switch_to.window(link[tab_number])
-    def move_to_elemnt(self, element):
-        self.browser.execute_script("return arguments[0].scrollIntoView(true);", element)
+    # def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"
+    #     link = self.browser.window_handles
+    #     self.browser.switch_to.window(link[tab_number])
+    def move_to_element(self, element): # перемещаем экран
+        self.browser.execute_script("arguments[0].scrollIntoView({behavior: 'auto', block: 'center', inline: 'center'});", element)
+    def move_to_element_mouse(self, element): # наводим курсор на элемент
+        action = ActionChains(self.browser)
+        action.move_to_element(element).click().perform()
     def change_payment(self):
         ProductPage.loader_wait(self)
         link = self.browser.find_element(*CsCartLocators.payment_link)
@@ -113,17 +118,33 @@ class ProductPage(BasePage):
     def click_required_terms(self):
         ProductPage.loader_wait(self)
         link = self.browser.find_element(*CsCartLocators.required_terms)
-        ProductPage.move_to_elemnt(self, link)
+        ProductPage.move_to_element(self, link)
         link.click()
     def click_place_order_button(self):
         link = self.browser.find_element(*CsCartLocators.place_order_button)
-        ProductPage.move_to_elemnt(self, link)
+        ProductPage.move_to_element(self, link)
         link.click()
     def enter_admin(self):
-        ProductPage.tabs(self, 1)
-        # self.is_element_here(self.browser, *CsCartLocators.admin_entry)
         link = self.browser.find_element(*CsCartLocators.admin_entry)
         link.click()
+    def enter_moduls(self):
+        link = self.browser.find_element(*CsCartLocators.moduls_entry)
+        link.click()
+    def found_recaptcha_module_and_turn_off(self):
+        link = self.browser.find_element(*CsCartLocators.found_recaptcha)
+        ProductPage.move_to_element(self, link)
+        link.click()
+        link = self.browser.find_element(*CsCartLocators.found_recaptcha_tool)
+        link.click()
+        link = self.browser.find_element(*CsCartLocators.off_recaptcha)
+        link.click()
+        BasePage.tabs(self, 0)
+    def repatcha_blockme(self):
+        try:
+            if self.is_element_present(*CsCartLocators.Add_to_cart_button) == True:
+                BeforeMethod.kill_recaptcha(self)
+        except:
+            return False
 class BeforeMethod(BasePage):
     def main_product_add_in_cart_checkout(self): # с главной, в товар, в карточку, в корзину, в чекаут
         BasePage.open(self)
@@ -136,13 +157,13 @@ class BeforeMethod(BasePage):
         ProductPage.change_shipping(self)
         ProductPage.change_payment(self)
         ProductPage.click_required_terms(self)
+        ProductPage.repatcha_blockme(self)
         ProductPage.click_place_order_button(self)
-    def kill_recaptcha(self):
+    def kill_recaptcha(self): # открываю второе окно, нахожу модуль рекапчи, выключаю. (Должна быть включена)
         BasePage.open_second_tab(self)
         ProductPage.enter_admin(self)
-
-
-
+        ProductPage.enter_moduls(self)
+        ProductPage.found_recaptcha_module_and_turn_off(self)
     def main_add_checout_success_order(self): # главная - товар - добавить в корзину - чекаут - заполнить все поля - нажать плейс ордер
         BeforeMethod.main_product_add_in_cart_checkout(self)
         BeforeMethod.pass_required_checkout_for_order(self)

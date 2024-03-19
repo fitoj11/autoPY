@@ -12,6 +12,10 @@ class BasePage():
         self.browser.get(self.url)
     def open_second_tab(self):
         self.browser.execute_script("window.open('https://dev.demo.cs-cart.ru/admin.php')")
+        self.tabs(1)
+    def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"
+        link = self.browser.window_handles
+        self.browser.switch_to.window(link[tab_number])
     def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)

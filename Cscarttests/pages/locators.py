@@ -41,6 +41,12 @@ class CsCartLocators():
     required_terms = (By.CSS_SELECTOR, "[id*='id_accept_terms']")
     place_order_button = (By.CSS_SELECTOR, "[name='dispatch[checkout.place_order]']")
     admin_entry = (By.CSS_SELECTOR, "[name='dispatch[auth.login]']")
+    moduls_entry = (By.CSS_SELECTOR, "[href*='addons.manage'][class*='icon']")
+    found_recaptcha = (By.CSS_SELECTOR, "tr[id*='recaptcha']")
+    # off_recaptcha = (By.CSS_SELECTOR, "tr[id*='recaptcha']")
+    found_recaptcha_tool = (By.CSS_SELECTOR, "tr[id*='recaptcha']>td[class*='nowrap']>div>[class*='tools']")
+    off_recaptcha = (By.CSS_SELECTOR, "tr[id*='recaptcha']>td[class*='nowrap']>div>[class*='tools']>div>ul>li>[class*='render']")
+    captcha = (By.CSS_SELECTOR, "div[id*='captcha']")
     "https://dev.demo.cs-cart.ru/admin.php"
     "div>label[class*='required']"
     "div[class*='field--input']>label[class*='required']"
