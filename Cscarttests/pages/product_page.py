@@ -139,12 +139,11 @@ class ProductPage(BasePage):
         link = self.browser.find_element(*CsCartLocators.off_recaptcha)
         link.click()
         BasePage.tabs(self, 0)
+        self.browser.refresh()
     def repatcha_blockme(self):
-        try:
-            if self.is_element_present(*CsCartLocators.Add_to_cart_button) == True:
+        if self.is_element_present(*CsCartLocators.captcha) == True:
                 BeforeMethod.kill_recaptcha(self)
-        except:
-            return False
+
 class BeforeMethod(BasePage):
     def main_product_add_in_cart_checkout(self): # с главной, в товар, в карточку, в корзину, в чекаут
         BasePage.open(self)
@@ -156,14 +155,15 @@ class BeforeMethod(BasePage):
         ProductPage.pass_required(self)
         ProductPage.change_shipping(self)
         ProductPage.change_payment(self)
-        ProductPage.click_required_terms(self)
         ProductPage.repatcha_blockme(self)
+        ProductPage.click_required_terms(self)
         ProductPage.click_place_order_button(self)
     def kill_recaptcha(self): # открываю второе окно, нахожу модуль рекапчи, выключаю. (Должна быть включена)
         BasePage.open_second_tab(self)
         ProductPage.enter_admin(self)
         ProductPage.enter_moduls(self)
         ProductPage.found_recaptcha_module_and_turn_off(self)
+        ProductPage.loader_wait(self)
     def main_add_checout_success_order(self): # главная - товар - добавить в корзину - чекаут - заполнить все поля - нажать плейс ордер
         BeforeMethod.main_product_add_in_cart_checkout(self)
         BeforeMethod.pass_required_checkout_for_order(self)

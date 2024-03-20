@@ -17,9 +17,10 @@ class BasePage():
         link = self.browser.window_handles
         self.browser.switch_to.window(link[tab_number])
     def is_element_present(self, how, what):
+        self.browser.implicitly_wait(0)
         try:
             self.browser.find_element(how, what)
-        except (NoSuchElementException):
+        except NoSuchElementException:
             return False
         return True
     def is_not_element_present(self, driver, how, what, timeout=0): # ждем пока элемент пропадет - пропал - выдаем True
@@ -28,7 +29,7 @@ class BasePage():
         except TimeoutException:
             return True
         return False
-    def is_element_here(self, driver, how, what, timeout=2): # ждем пока элемент появится (не протестировано)
+    def is_element_here(self, driver, how, what, timeout=0): # ждем пока элемент появится (не протестировано)
         try:
             WebDriverWait(driver, timeout).until(EC.presence_of_element_located((how, what)))
         except TimeoutException:
