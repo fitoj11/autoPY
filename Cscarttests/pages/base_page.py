@@ -16,8 +16,8 @@ class BasePage():
     def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"
         link = self.browser.window_handles
         self.browser.switch_to.window(link[tab_number])
-    def is_element_present(self, how, what):
-        self.browser.implicitly_wait(0)
+    def is_element_present(self, how, what): # если элемента нет в моменте, то сразу отдаем ошибку, время не ждем
+        self.browser.implicitly_wait(0) # переопредели время ожидания от класса на 0
         try:
             self.browser.find_element(how, what)
         except NoSuchElementException:
