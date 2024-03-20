@@ -141,8 +141,10 @@ class ProductPage(BasePage):
         BasePage.tabs(self, 0)
         self.browser.refresh()
     def repatcha_blockme(self):
-        if self.is_element_present(*CsCartLocators.captcha) == True:
+        if self.is_element_present_zero_time(*CsCartLocators.captcha) == True:
                 BeforeMethod.kill_recaptcha(self)
+    def should_be_have_order_details(self):
+        assert self.is_element_present(*CsCartLocators.order_succes_link), "Not have order succes msg and link to order"
 
 class BeforeMethod(BasePage):
     def main_product_add_in_cart_checkout(self): # с главной, в товар, в карточку, в корзину, в чекаут

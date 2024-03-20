@@ -16,8 +16,7 @@ class BasePage():
     def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"
         link = self.browser.window_handles
         self.browser.switch_to.window(link[tab_number])
-    def is_element_present(self, how, what): # если элемента нет в моменте, то сразу отдаем ошибку, время не ждем
-        self.browser.implicitly_wait(0) # переопредели время ожидания от класса на 0
+    def is_element_present(self, how, what):
         try:
             self.browser.find_element(how, what)
         except NoSuchElementException:
@@ -29,9 +28,10 @@ class BasePage():
         except TimeoutException:
             return True
         return False
-    def is_element_here(self, driver, how, what, timeout=0): # ждем пока элемент появится (не протестировано)
+    def is_element_present_zero_time(self, how, what): # если элемента нет в моменте, то сразу отдаем ошибку, время не ждем
+        self.browser.implicitly_wait(0) # переопредели время ожидания от класса на 0
         try:
-            WebDriverWait(driver, timeout).until(EC.presence_of_element_located((how, what)))
-        except TimeoutException:
+            self.browser.find_element(how, what)
+        except NoSuchElementException:
             return False
         return True

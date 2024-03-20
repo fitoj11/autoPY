@@ -47,6 +47,7 @@ class CsCartLocators():
     found_recaptcha_tool = (By.CSS_SELECTOR, "tr[id*='recaptcha']>td[class*='nowrap']>div>[class*='tools']")
     off_recaptcha = (By.CSS_SELECTOR, "tr[id*='recaptcha']>td[class*='nowrap']>div>[class*='tools']>div>ul>li>[class*='render']")
     captcha = (By.CSS_SELECTOR, "div[id*='captcha']")
+    order_succes_link = (By.CSS_SELECTOR, "div[class='ty-checkout-complete__order-success']>p>a[href*='order_id=']")
     "https://dev.demo.cs-cart.ru/admin.php"
     "div>label[class*='required']"
     "div[class*='field--input']>label[class*='required']"
