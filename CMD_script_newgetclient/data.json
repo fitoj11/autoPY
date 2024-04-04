@@ -1,0 +1,11 @@
+{
+    "phoneNumber": "123555"
+    ,"clientName": "Иванов Иван"        // ФИО клиента
+    ,"clientId": "8800200333"           // Идентификатор клиента
+    ,"systemId": "CRM"                  // Код системы
+    ,"objectId": "CRM_directory_clients"// Код объекта системы
+    ,"userName": "Сотрудников Антон"    // ФИО пользователя
+    ,"userLogin": "SotrudnikovA"        // Логин пользователя
+    ,"mashineName": "host-526-25"       // Имя машины
+    ,"bidType": 22222
+}
