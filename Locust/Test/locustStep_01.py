@@ -49,6 +49,9 @@ class WebsiteTestUser(HttpUser):
             "security_hash": security_hash
         }
         print(f"{url}admin.php")
+        self.client.post(f"{url}admin.php", data=form_data, headers=headers)
+        # response_test = self.client.post(f"{url}admin.php", data=form_data, headers=headers)
+        # print(response_test.text)
         form_data2 = {
             "full_render": "true",
             "security_hash": security_hash,
@@ -56,7 +59,7 @@ class WebsiteTestUser(HttpUser):
             "is_ajax": "1"
         }
         self.client.post(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage", data=form_data2, headers=headers)
-        # print(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage")
+        print(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage")
 
         # Необходимо добавить User-Agent с реального запроса, тогда get запрос будет удачным. Также, необходимо обработать
         # JavaScript из тела ответа. Так создается демка и мы сможем получить ID демки.
@@ -87,15 +90,21 @@ class WebsiteTestUser(HttpUser):
         self.client.get(url)
     @task(2) # Регистрация
     def registration(self):
-        self.client.get(f"{url}index.php?dispatch=auth.logout&redirect_url=index.php")
+        # response_test = self.client.get(f"{url}index.php?dispatch=auth.logout") ## logout
+        self.client.get(f"{url}index.php?dispatch=auth.logout", headers=headers)  ## logout
+        # print(response_test.url, 1)
+        # response_test2 = self.client.get(url)
+        self.client.get(url)
+        # print(response_test2.url, 1.1)
         number = random.randint(0, 100)
-        response2 = self.client.get("", headers=headers)
+        response2 = self.client.get(f"{url}profiles-add", headers=headers)
+        # print(response2.url, 2)
         html_content2 = response2.text
         security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
         # print(security_hash_storefront1)
         form_data = {
             "ship_to_another": "",
-            "user_data[firstname]": "",
+            "user_data[firstname]": f"{number}",
             "user_data[lastname]": "",
             "user_data[phone]": "",
             "user_data[email]": f"test{number}@mail.ru",
@@ -107,8 +116,45 @@ class WebsiteTestUser(HttpUser):
             "security_hash": security_hash_storefront1
         }
         response = self.client.post(url, data=form_data, headers=headers)
-        response_headers = response.headers
-        print(response_headers)
+        # url_test = response.url
+
+        # self.client.post(url, data=form_data, headers=headers)
+
+        try:
+            html_content2 = response.text # выводит email если залогинены
+            # test = re.search(r'"ty-account-info__item ty-dropdown-box__item ty-account-info__name">(.*?)</li>', html_content2)
+            test = re.search(r'"ty-account-info__item  ty-account-info__name ty-dropdown-box__item">(.*?)</li>', html_content2).group(1)
+            print(test)
+        except:
+            print("none")
+        #
+        # print(url_test, 3)
+        print("random number: ", number)
+    # @task(3)
+    # def registration_test(self):
+    #     number = random.randint(0, 100)
+    #     response2 = self.client.get(f"{url}profiles-add", headers=headers)
+    #     html_content2 = response2.text
+    #     security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"',
+    #                                           html_content2).group(1)
+    #     # print(security_hash_storefront1)
+    #     form_data = {
+    #         "ship_to_another": "",
+    #         "user_data[firstname]": "",
+    #         "user_data[lastname]": "",
+    #         "user_data[phone]": "",
+    #         "user_data[email]": f"test{number}@mail.ru",
+    #         "user_data[password1]": f"test{number}",
+    #         "user_data[password2]": f"test{number}",
+    #         "user_data[birthday]": "",
+    #         "all_mailing_lists[]": "1",
+    #         "dispatch[profiles.update]": "",
+    #         "security_hash": security_hash_storefront1
+    #     }
+    #     response = self.client.post(url, data=form_data, headers=headers)
+    #     url_test = response.url
+    #     print(url_test, 2)
+    #     print(number)
 
     # @task(3) # Запрос каталога товаров
     # def home_page(self):
