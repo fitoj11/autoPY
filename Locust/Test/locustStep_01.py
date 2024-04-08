@@ -21,8 +21,9 @@ class WebsiteTestUser(HttpUser):
         global url
         global security_hash
         global headers
+        global security_hash_storefront1
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
-        response = self.client.get("", headers=headers)
+        response = self.client.get("", headers=headers, name = 'Инициализация')
         html_content = response.text
         csrf_token = re.search(r'<meta name="csrf-token" content="(.+?)">', html_content).group(1)
         form_data = {
@@ -30,14 +31,18 @@ class WebsiteTestUser(HttpUser):
             "edition": "ult",
             "type": "online"
         }
-        response = self.client.post("", data=form_data, headers=headers)
+        response = self.client.post("", data=form_data, headers=headers, name = 'Создание демо магазина')
         print(response.url)
         url = response.url
+
+        html_content2 = response.text
+        security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
+
         # response2 = self.client.get("", headers=headers)
         # html_content2 = response2.text
         # security_hash_storefront = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"',html_content2).group(1)
         # print(security_hash_storefront)
-        response2 = self.client.get(f"{url}admin.php?dispatch=auth.login_form&return_url=admin.php", headers=headers)
+        response2 = self.client.get(f"{url}admin.php?dispatch=auth.login_form&return_url=admin.php", headers=headers, name = 'Получение security_hash')
         html_content2 = response2.text
         security_hash = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
         print(security_hash)
@@ -49,7 +54,7 @@ class WebsiteTestUser(HttpUser):
             "security_hash": security_hash
         }
         print(f"{url}admin.php")
-        self.client.post(f"{url}admin.php", data=form_data, headers=headers)
+        self.client.post(f"{url}admin.php", data=form_data, headers=headers, name = 'Авторизация в админку')
         # response_test = self.client.post(f"{url}admin.php", data=form_data, headers=headers)
         # print(response_test.text)
         form_data2 = {
@@ -58,7 +63,7 @@ class WebsiteTestUser(HttpUser):
             "result_ids": "addons_list, top_bar, header_navbar, header_subnav, addons_counter, elm_developer_pages, elm_all_dev_pages",
             "is_ajax": "1"
         }
-        self.client.post(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage", data=form_data2, headers=headers)
+        self.client.post(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage", data=form_data2, headers=headers, name = 'Рекапча килл')
         print(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage")
 
         # Необходимо добавить User-Agent с реального запроса, тогда get запрос будет удачным. Также, необходимо обработать
@@ -87,20 +92,21 @@ class WebsiteTestUser(HttpUser):
         pass
     @task(1) # Запросы главной страницы
     def home_page(self):
-        self.client.get(url)
+        self.client.get(url, name = 'Главная страница')
     @task(2) # Регистрация
     def registration(self):
         # response_test = self.client.get(f"{url}index.php?dispatch=auth.logout") ## logout
-        self.client.get(f"{url}index.php?dispatch=auth.logout", headers=headers)  ## logout
+        self.client.get(f"{url}index.php?dispatch=auth.logout", headers=headers, name = 'Выход из аккаунта (перед регистрацией)')  ## logout
         # print(response_test.url, 1)
         # response_test2 = self.client.get(url)
-        self.client.get(url)
+        # self.client.get(url)
         # print(response_test2.url, 1.1)
         number = random.randint(0, 100)
-        response2 = self.client.get(f"{url}profiles-add", headers=headers)
-        # print(response2.url, 2)
-        html_content2 = response2.text
-        security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
+
+        # response2 = self.client.get(f"{url}profiles-add", headers=headers, name = 'Получение security_hash_storefront')
+        # html_content2 = response2.text
+        # security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
+
         # print(security_hash_storefront1)
         form_data = {
             "ship_to_another": "",
@@ -113,9 +119,8 @@ class WebsiteTestUser(HttpUser):
             "user_data[birthday]": "",
             "all_mailing_lists[]": "1",
             "dispatch[profiles.update]": "",
-            "security_hash": security_hash_storefront1
-        }
-        response = self.client.post(url, data=form_data, headers=headers)
+            "security_hash": security_hash_storefront1}
+        response = self.client.post(url, data=form_data, headers=headers, name = 'Регистрация')
         # url_test = response.url
 
         # self.client.post(url, data=form_data, headers=headers)
@@ -126,39 +131,25 @@ class WebsiteTestUser(HttpUser):
             test = re.search(r'"ty-account-info__item  ty-account-info__name ty-dropdown-box__item">(.*?)</li>', html_content2).group(1)
             print(test)
         except:
-            print("none")
+            print("Not registred")
         #
         # print(url_test, 3)
         print("random number: ", number)
-    # @task(3)
-    # def registration_test(self):
-    #     number = random.randint(0, 100)
-    #     response2 = self.client.get(f"{url}profiles-add", headers=headers)
-    #     html_content2 = response2.text
-    #     security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"',
-    #                                           html_content2).group(1)
-    #     # print(security_hash_storefront1)
-    #     form_data = {
-    #         "ship_to_another": "",
-    #         "user_data[firstname]": "",
-    #         "user_data[lastname]": "",
-    #         "user_data[phone]": "",
-    #         "user_data[email]": f"test{number}@mail.ru",
-    #         "user_data[password1]": f"test{number}",
-    #         "user_data[password2]": f"test{number}",
-    #         "user_data[birthday]": "",
-    #         "all_mailing_lists[]": "1",
-    #         "dispatch[profiles.update]": "",
-    #         "security_hash": security_hash_storefront1
-    #     }
-    #     response = self.client.post(url, data=form_data, headers=headers)
-    #     url_test = response.url
-    #     print(url_test, 2)
-    #     print(number)
-
-    # @task(3) # Запрос каталога товаров
-    # def home_page(self):
-    #     self.client.get(url)
-    # @task(4) # Оформить заказ
-    # def home_page(self):
-    #     self.client.get(url)
+    @task(3) # запрос всего каталога
+    def catalog(self):
+        params = {
+              "match": "all",
+              "subcats": "Y",
+              "pcode_from_q": "Y",
+              "pshort": "Y",
+              "pfull": "Y",
+              "pname": "Y",
+              "pkeywords": "Y",
+              "search_performed": "Y",
+              "hint_q": "Искать товары",
+              "dispatch": "products.search",
+              "security_hash": f"{security_hash_storefront1}"}
+        self.client.get(url, headers=headers, params=params, name='Запрос всех товаров')
+    @task(4) # Оформить заказ
+    def home_page(self):
+        self.client.get(url)
