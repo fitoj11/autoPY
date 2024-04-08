@@ -21,7 +21,7 @@ class WebsiteTestUser(HttpUser):
         global url
         global security_hash
         global headers
-        global security_hash_storefront1
+        global security_hash_storefront2
         headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"}
         response = self.client.get("", headers=headers, name = 'Инициализация')
         html_content = response.text
@@ -32,11 +32,11 @@ class WebsiteTestUser(HttpUser):
             "type": "online"
         }
         response = self.client.post("", data=form_data, headers=headers, name = 'Создание демо магазина')
-        print(response.url)
+        # print(response.url)
         url = response.url
 
         html_content2 = response.text
-        security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
+        security_hash_storefront2 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
 
         # response2 = self.client.get("", headers=headers)
         # html_content2 = response2.text
@@ -45,7 +45,7 @@ class WebsiteTestUser(HttpUser):
         response2 = self.client.get(f"{url}admin.php?dispatch=auth.login_form&return_url=admin.php", headers=headers, name = 'Получение security_hash')
         html_content2 = response2.text
         security_hash = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
-        print(security_hash)
+        # print(security_hash)
         form_data = {
             "return_url": "admin.php?dispatch=index.index",
             "user_login": "admin@example.com",
@@ -64,7 +64,7 @@ class WebsiteTestUser(HttpUser):
             "is_ajax": "1"
         }
         self.client.post(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage", data=form_data2, headers=headers, name = 'Рекапча килл')
-        print(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage")
+        # print(f"{url}admin.php?dispatch=addons.update_status&id=recaptcha&status=D&redirect_url=admin.php%3Fdispatch%3Daddons.manage")
 
         # Необходимо добавить User-Agent с реального запроса, тогда get запрос будет удачным. Также, необходимо обработать
         # JavaScript из тела ответа. Так создается демка и мы сможем получить ID демки.
@@ -101,11 +101,11 @@ class WebsiteTestUser(HttpUser):
         # response_test2 = self.client.get(url)
         # self.client.get(url)
         # print(response_test2.url, 1.1)
-        number = random.randint(0, 100)
+        number = random.randint(0, 100000)
 
-        # response2 = self.client.get(f"{url}profiles-add", headers=headers, name = 'Получение security_hash_storefront')
-        # html_content2 = response2.text
-        # security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
+        response2 = self.client.get(f"{url}profiles-add", headers=headers, name = 'Получение security_hash_storefront')
+        html_content2 = response2.text
+        security_hash_storefront1 = re.search(r'name="security_hash" class="cm-no-hide-input" value="([^"]+)"', html_content2).group(1)
 
         # print(security_hash_storefront1)
         form_data = {
@@ -148,8 +148,8 @@ class WebsiteTestUser(HttpUser):
               "search_performed": "Y",
               "hint_q": "Искать товары",
               "dispatch": "products.search",
-              "security_hash": f"{security_hash_storefront1}"}
+              "security_hash": f"{security_hash_storefront2}"}
         self.client.get(url, headers=headers, params=params, name='Запрос всех товаров')
-    @task(4) # Оформить заказ
-    def home_page(self):
-        self.client.get(url)
+    # @task(4) # Оформить заказ
+    # def home_page(self):
+    #     self.client.get(url)
