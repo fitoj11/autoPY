@@ -47,5 +47,4 @@ def test_main_add_checout_success_order(browser): # оформить заказ,
     page.should_be_have_order_details()
 def test_test(browser):
     page = BeforeMethod(browser, link)
-    page.kill_recaptcha()
     time.sleep(5)

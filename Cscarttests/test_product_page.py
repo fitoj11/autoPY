@@ -4,7 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from .pages.main_page import MainPage
 from selenium.common.exceptions import NoSuchElementException
-from .pages.login_page import LoginPage
+from .pages.catalog_page import LoginPage
 from selenium.common.exceptions import NoAlertPresentException
 from .pages.product_page import ProductPage
 from selenium import webdriver
