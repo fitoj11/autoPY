@@ -1,6 +1,6 @@
-from .base_page import BasePage
+# from .base_page import BasePage
 from .product_page import *
-from selenium.webdriver.common.by import By
+# from selenium.webdriver.common.by import By
 from .locators import CsCartCatalogLocators
 class CatalogPage(BasePage):
     def go_to_catalog(self):
@@ -16,7 +16,6 @@ class CatalogPage(BasePage):
         assert name1 == name2, "product default display type not equal 2 type"
         assert name1 == name3, "product default display type not equal 3 type"
         assert name2 == name3, "product 2 display type not equal 3 type"
-    def
 class ProductDisplayType1(BasePage):
     def __init__(self, browser):
         self.browser = browser

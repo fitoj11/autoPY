@@ -45,6 +45,3 @@ def test_main_add_checout_success_order(browser): # оформить заказ,
     page.main_add_checout_success_order()
     page = ProductPage(browser, link)
     page.should_be_have_order_details()
-def test_test(browser):
-    page = BeforeMethod(browser, link)
-    time.sleep(5)
