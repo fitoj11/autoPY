@@ -53,3 +53,13 @@ class CsCartLocators():
     "div[class*='field--input']>label[class*='required']"
     "div[class*='field--input']:has(>label[class*='required'])" # оператор :has() выбирает родительский элемент по характеристикам дочернего.
     "div[class*='field--input']:has(>label[class*='required']) input" # находим родителя, потом смещаемся на дочерний элемент "input"
+class CsCartCatalogLocators():
+    CATALOG_LINK = (By.CSS_SELECTOR, "button[class='ty-search-magnifier']")
+    find_products = (By.CSS_SELECTOR, "bdi>a")
+    display_type1 = (By.CSS_SELECTOR, "div[class='ty-sort-container__views-icons']>a:nth-child(1)")
+    display_type2 = (By.CSS_SELECTOR, "div[class='ty-sort-container__views-icons']>a:nth-child(2)")
+    display_type3 = (By.CSS_SELECTOR, "div[class='ty-sort-container__views-icons']>a:nth-child(3)")
+    lower_price = (By.CSS_SELECTOR, "[class='sort-by-price-asc ty-sort-dropdown__content-item']")
+    high_price = (By.CSS_SELECTOR, "[class='sort-by-price-desc ty-sort-dropdown__content-item']")
+    find_products_price = (By.CSS_SELECTOR, "[class='ty-price']>span:nth-child(1)")
+    find_sort_dropbox = (By.CSS_SELECTOR, "[id='sw_elm_sort_fields']")
