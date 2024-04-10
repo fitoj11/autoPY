@@ -16,6 +16,51 @@ class CatalogPage(BasePage):
         assert name1 == name2, "product default display type not equal 2 type"
         assert name1 == name3, "product default display type not equal 3 type"
         assert name2 == name3, "product 2 display type not equal 3 type"
+    def sort_lower_price(self):
+        link = self.browser.find_element(*CsCartCatalogLocators.find_sort_dropbox)
+        link.click()
+        try:
+            link = self.browser.find_element(*CsCartCatalogLocators.lower_price)
+            link.click()
+        finally:
+            return
+    def get_product_price(self):
+        ProductPage.loader_wait(self)
+        elements = self.browser.find_elements(*CsCartCatalogLocators.find_products_price)
+        price = []
+        for element in elements:
+            price_value = element.text
+            if price_value:
+                price_value = price_value.replace(" ", "")
+                price.append(price_value)
+        return [float(p) for p in price]
+    def check_product_price_is_lower(self):
+        price = self.get_product_price()
+        for x in range(len(price) - 1):
+            if price[x] > price[x+1]:
+                return False
+        return True
+    def should_be_sort_is_lower(self):
+        ProductPage.loader_wait(self)
+        assert self.check_product_price_is_lower() == True, "Not lowest sort"
+    def sort_high_price(self):
+        link = self.browser.find_element(*CsCartCatalogLocators.find_sort_dropbox)
+        link.click()
+        try:
+            link = self.browser.find_element(*CsCartCatalogLocators.high_price)
+            link.click()
+        finally:
+            return
+    def check_product_price_is_high(self):
+        ProductPage.loader_wait(self)
+        price = self.get_product_price()
+        for x in range(len(price) - 1):
+            if float(price[x]) < float(price[x+1]):
+                return False
+        return True
+    def should_be_sort_is_high(self):
+        ProductPage.loader_wait(self)
+        assert self.check_product_price_is_high() == True, "Not high sort"
 class ProductDisplayType1(BasePage):
     def __init__(self, browser):
         self.browser = browser
@@ -39,7 +84,7 @@ class ProductDisplayType2(BasePage):
     def __init__(self, browser):
         self.browser = browser
     def found_products_2_display_type(self):
-        elements = self.browser.find_elements(*CsCartCatalogLocators.find_products_type2)
+        elements = self.browser.find_elements(*CsCartCatalogLocators.find_products)
         names = []
         for element in elements:
             name_value = element.get_attribute("title")
@@ -58,7 +103,7 @@ class ProductDisplayType3(BasePage):
     def __init__(self, browser):
         self.browser = browser
     def found_products_3_display_type(self):
-        elements = self.browser.find_elements(*CsCartCatalogLocators.find_products_type3)
+        elements = self.browser.find_elements(*CsCartCatalogLocators.find_products)
         names = []
         for element in elements:
             name_value = element.get_attribute("title")
