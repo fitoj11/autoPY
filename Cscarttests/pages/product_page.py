@@ -100,8 +100,8 @@ class ProductPage(BasePage):
             link2.click()
     def loader_wait(self):
         try:
-            if self.browser.find_element(*CsCartLocators.loader):
-                self.is_not_element_present(self.browser, *CsCartLocators.loader)
+            self.is_not_element_present(self.browser, *CsCartLocators.loader2)
+            self.is_not_element_present(self.browser, *CsCartLocators.loader)
         finally:
             return True
     # def tabs(self, tab_number): # создает массив и нумерует вкладки, в функции надо указать "self, номер вкладки"

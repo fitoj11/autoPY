@@ -23,6 +23,7 @@ class BasePage():
             return False
         return True
     def is_not_element_present(self, driver, how, what, timeout=0): # ждем пока элемент пропадет - пропал - выдаем True
+        self.browser.implicitly_wait(0)
         try:
             WebDriverWait(driver, timeout).until_not(EC.presence_of_element_located((how, what)))
         except TimeoutException:

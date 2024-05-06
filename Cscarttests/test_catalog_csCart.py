@@ -23,9 +23,8 @@ def test_switch_sort_high(browser): # в каталог, сортировка п
     page.go_to_catalog()
     page.sort_high_price()
     page.should_be_sort_is_high()
-def test_switch_pagination_steps(browser): # изменение отображаемых элементов на странице
+def test_switch_pagination_steps(browser): # изменение количества отображаемых элементов на странице
     page = CatalogPage(browser, link)
     page.open()
     page.go_to_catalog()
     page.found_products_default_display_type()
-    time.sleep(4)
