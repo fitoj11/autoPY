@@ -100,6 +100,7 @@ class ProductPage(BasePage):
             link2.click()
     def loader_wait(self):
         try:
+            self.is_not_element_present(self.browser, *CsCartLocators.loader2)
             self.is_not_element_present(self.browser, *CsCartLocators.loader)
         finally:
             return True

@@ -35,7 +35,7 @@ class CsCartLocators():
     shipping = (By.CSS_SELECTOR, "[class*='pickup--map-list']")
     shipping_block = (By.CSS_SELECTOR, "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:nth-child(2)")
     shipping_block_click = (By.CSS_SELECTOR, "[class='litecheckout__group litecheckout__step']")
-    # loader = (By.CSS_SELECTOR , "div[data-ca-shipping*='pickup_offices']>div[class*='--list']>label:nth-child(2)")
+    loader2 = (By.CSS_SELECTOR , "div[id='ajax_overlay'][style='display: block;']")
     loader = (By.CSS_SELECTOR, "div[id='ajax_overlay'][style='display: block;']")
     payment_link = (By.CSS_SELECTOR, "[data-ca-toggling='payments_form_wrapper_18']")
     required_terms = (By.CSS_SELECTOR, "[id*='id_accept_terms']")
