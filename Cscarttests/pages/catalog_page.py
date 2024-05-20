@@ -63,6 +63,7 @@ class CatalogPage(BasePage):
                 link.click()
                 ProductPage.loader_wait(self)
         finally:
+            ProductPage.loader_wait(self)
             return
     def check_product_price_is_high(self):
         price = self.get_product_price()
